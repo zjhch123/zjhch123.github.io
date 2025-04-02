@@ -11,6 +11,9 @@ const paymentRequest = stripe.paymentRequest({
     },
     requestPayerName: true,
     requestPayerEmail: true,
+    paymentMethods: {
+        applePay: 'always',
+    },
 });
 
 // Check if device supports Apple Pay
