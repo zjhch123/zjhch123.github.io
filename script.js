@@ -1,5 +1,5 @@
 // Initialize Stripe with test publishable key
-const stripe = Stripe('pk_test_51O9aQaGWJTRVN6GYTzELnG38JEG4TGqBgNeyr3UQWXZbc4hnpmcHJHjpPnZkxJWx4HqAlSRjR3EZQS9Oj5CEVege00wBXGF6Y3');
+const stripe = Stripe('pk_test_51L1Fn6GlGJzWWZjtLSUOrxi8dWQg6y0P9IVyQYPcMZGzrzWtFEjR6FbnUYp8dSUD6cFMHv4iyetKECGOzG9IMOFI00iCyXqq1t');
 
 // Create payment request for Apple Pay
 const paymentRequest = stripe.paymentRequest({
