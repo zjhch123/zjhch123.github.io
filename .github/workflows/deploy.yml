@@ -30,14 +30,8 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           
-          # Create a new orphan branch if deploy doesn't exist
-          if ! git ls-remote --heads origin deploy; then
-            git checkout --orphan deploy
-            git rm -rf .
-          else
-            git fetch origin deploy
-            git checkout deploy
-          fi
+          git fetch origin deploy
+          git checkout deploy
           
           # Clean existing files except dist
           git rm -rf .
