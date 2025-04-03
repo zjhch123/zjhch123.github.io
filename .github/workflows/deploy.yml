@@ -1,0 +1,54 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to deploy branch
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          # Create a new orphan branch if deploy doesn't exist
+          if ! git ls-remote --heads origin deploy; then
+            git checkout --orphan deploy
+            git rm -rf .
+          else
+            git fetch origin deploy
+            git checkout deploy
+          fi
+          
+          # Clean existing files except dist
+          git rm -rf .
+          
+          # Copy dist content to root
+          cp -r dist/* .
+          rm -rf dist
+          
+          # Add and commit changes
+          git add .
+          git commit -m "Deploy to production: ${GITHUB_SHA}"
+          
+          # Push changes
+          git push origin deploy --force
