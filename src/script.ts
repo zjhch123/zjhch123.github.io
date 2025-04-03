@@ -1,3 +1,5 @@
+/// <reference types="stripe-v3" />
+
 // Initialize Stripe with test publishable key
 const stripe = Stripe('pk_test_51L1Fn6GlGJzWWZjtLSUOrxi8dWQg6y0P9IVyQYPcMZGzrzWtFEjR6FbnUYp8dSUD6cFMHv4iyetKECGOzG9IMOFI00iCyXqq1t');
 
@@ -14,19 +16,28 @@ const paymentRequest = stripe.paymentRequest({
 });
 
 // Check if device supports Apple Pay
-async function checkApplePaySupport() {
+async function checkApplePaySupport(): Promise<boolean> {
     const result = await paymentRequest.canMakePayment();
     if (!result || !result.applePay) {
-        document.getElementById('payment-status').textContent = 'This demo requires Apple Pay. Please use a device with Apple Pay enabled.';
-        document.getElementById('payment-request-button').style.display = 'none';
+        const statusElement = document.getElementById('payment-status');
+        if (statusElement) {
+            statusElement.textContent = 'This demo requires Apple Pay. Please use a device with Apple Pay enabled.';
+        }
+        const buttonElement = document.getElementById('payment-request-button');
+        if (buttonElement) {
+            buttonElement.style.display = 'none';
+        }
         return false;
     }
-    document.getElementById('payment-status').textContent = 'Apple Pay is ready. Click the button above to start payment.';
+    const statusElement = document.getElementById('payment-status');
+    if (statusElement) {
+        statusElement.textContent = 'Apple Pay is ready. Click the button above to start payment.';
+    }
     return true;
 }
 
 // Initialize payment request button
-async function initialize() {
+async function initialize(): Promise<void> {
     const canUseApplePay = await checkApplePaySupport();
     
     if (canUseApplePay) {
@@ -36,7 +47,8 @@ async function initialize() {
             style: {
                 paymentRequestButton: {
                     type: 'buy',
-                    theme: 'dark'
+                    theme: 'dark',
+                    height: '40px'
                 }
             }
         });
@@ -46,18 +58,22 @@ async function initialize() {
 }
 
 // Handle successful payment method creation
-function handlePaymentMethodCreated(paymentMethodId) {
+function handlePaymentMethodCreated(paymentMethodId: string): void {
     const statusElement = document.getElementById('payment-status');
-    statusElement.textContent = `Payment Method ID created: ${paymentMethodId}`;
-    statusElement.className = 'payment-status success';
+    if (statusElement) {
+        statusElement.textContent = `Payment Method ID created: ${paymentMethodId}`;
+        statusElement.className = 'payment-status success';
+    }
     console.log('Payment Method ID:', paymentMethodId);
 }
 
 // Handle payment error
-function handlePaymentError(error) {
+function handlePaymentError(error: Error): void {
     const statusElement = document.getElementById('payment-status');
-    statusElement.textContent = `Error: ${error.message}`;
-    statusElement.className = 'payment-status error';
+    if (statusElement) {
+        statusElement.textContent = `Error: ${error.message}`;
+        statusElement.className = 'payment-status error';
+    }
     console.error('Payment error:', error);
 }
 
@@ -65,7 +81,8 @@ function handlePaymentError(error) {
 paymentRequest.on('paymentmethod', async (event) => {
     try {
         // Ensure it's Apple Pay
-        if (event.paymentMethod.type !== 'card' || !event.paymentMethod.card.wallet?.type !== 'apple_pay') {
+        const isApplePay = event.paymentMethod.card?.wallet?.type === 'apple_pay';
+        if (event.paymentMethod.type !== 'card' || !isApplePay) {
             throw new Error('Only Apple Pay is accepted');
         }
 
@@ -80,7 +97,7 @@ paymentRequest.on('paymentmethod', async (event) => {
         // server.processPayment(paymentMethodId);
         
     } catch (error) {
-        handlePaymentError(error);
+        handlePaymentError(error instanceof Error ? error : new Error('Unknown error'));
         event.complete('fail');
     }
 });
@@ -88,5 +105,5 @@ paymentRequest.on('paymentmethod', async (event) => {
 // Start the payment flow
 initialize().catch(error => {
     console.error('Initialization error:', error);
-    handlePaymentError(error);
+    handlePaymentError(error instanceof Error ? error : new Error('Unknown error'));
 });
