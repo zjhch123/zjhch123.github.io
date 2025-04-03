@@ -29,18 +29,15 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git fetch origin deploy
+          git checkout deploy
           
           find . -mindepth 1 -maxdepth 1 ! -name "dist" ! -name ".git" -exec rm -rf {} +
           # Copy dist content to root
           cp -r dist/* .
           rm -rf dist
-          
+
           # Add and commit changes
-          git stash
-          git fetch origin deploy
-          git checkout deploy
-          git rm -rf .
-          git stash pop
           git add .
           git commit -m "Deploy to production: ${GITHUB_SHA}"
           
