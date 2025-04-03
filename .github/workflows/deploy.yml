@@ -30,18 +30,14 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           
-          git fetch origin deploy
-          git checkout deploy
-          
-          # Clean existing files except dist
-          git rm -rf .
-          
+          find . -type d ! -name "dist" ! -name ".git" -exec rm -rf {} +
           # Copy dist content to root
           cp -r dist/* .
           rm -rf dist
-          rm -rf node_modules
           
           # Add and commit changes
+          git fetch origin deploy
+          git checkout deploy
           git add .
           git commit -m "Deploy to production: ${GITHUB_SHA}"
           
