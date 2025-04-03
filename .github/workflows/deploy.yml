@@ -36,8 +36,11 @@ jobs:
           rm -rf dist
           
           # Add and commit changes
+          git stash
           git fetch origin deploy
           git checkout deploy
+          git rm -rf .
+          git stash pop
           git add .
           git commit -m "Deploy to production: ${GITHUB_SHA}"
           
