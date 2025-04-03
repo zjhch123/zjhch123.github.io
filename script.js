@@ -4,10 +4,10 @@ const stripe = Stripe('pk_test_51L1Fn6GlGJzWWZjtLSUOrxi8dWQg6y0P9IVyQYPcMZGzrzWt
 // Create payment request for Apple Pay
 const paymentRequest = stripe.paymentRequest({
     country: 'US',
-    currency: 'usd',
+    currency: 'CNY',
     total: {
         label: 'Sample Product',
-        amount: 1999, // $19.99 in cents
+        amount: 1, // $19.99 in cents
     },
     requestPayerName: true,
     requestPayerEmail: true,
