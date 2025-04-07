@@ -7,6 +7,12 @@
                 "paths": [
                     "/share/*"
                 ]
+            },
+            {
+                "appID": "SGGM6D27TK.com.microsoft.copilot",
+                "paths": [
+                    "/share/*"
+                ]
             }
         ]
     }
