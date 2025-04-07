@@ -13,6 +13,16 @@
     </div>
 </body>
 <script>
+    // write to clipboard
+    function copyToClipboard(text) {
+        const el = document.createElement('textarea');
+        el.value = text;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+    }
+    copyToClipboard('https://zjhch123.github.io/share/dsadsadsa?referral=1234567890')
     setTimeout(function() {
         if (!document.hidden) { 
             window.location = "https://apps.apple.com/app/6472538445"; 
