@@ -23,7 +23,9 @@ jobs:
         run: npm install
 
       - name: Build
-        run: npm run build
+        run: |
+          npm run build
+          cp -r public/* dist/
 
       - name: Deploy to deploy branch
         run: |
@@ -32,13 +34,10 @@ jobs:
           git fetch origin deploy
           git checkout deploy
           
-          find . -mindepth 1 -maxdepth 1 ! -name "dist" ! -name ".git" ! -name "public" -exec rm -rf {} +
+          find . -mindepth 1 -maxdepth 1 ! -name "dist" ! -name ".git" -exec rm -rf {} +
           # Copy dist content to root
           cp -r dist/* .
           rm -rf dist
-
-          cp -r public/* .
-          rm -rf public
 
           # Add and commit changes
           git add .
