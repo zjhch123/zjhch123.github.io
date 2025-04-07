@@ -32,7 +32,7 @@ jobs:
           git fetch origin deploy
           git checkout deploy
           
-          find . -mindepth 1 -maxdepth 1 ! -name "dist" ! -name ".git" -exec rm -rf {} +
+          find . -mindepth 1 -maxdepth 1 ! -name "dist" ! -name ".git" ! -name "public" -exec rm -rf {} +
           # Copy dist content to root
           cp -r dist/* .
           rm -rf dist
