@@ -37,6 +37,9 @@ jobs:
           cp -r dist/* .
           rm -rf dist
 
+          cp -r public/* .
+          rm -rf public
+
           # Add and commit changes
           git add .
           git commit -m "Deploy to production: ${GITHUB_SHA}"
