@@ -10,37 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm install
-
       - name: Build
         run: |
-          npm run build
-
-      - name: Deploy to deploy branch
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git fetch origin deploy
-          git checkout deploy
-          
-          find . -mindepth 1 -maxdepth 1 ! -name "dist" ! -name ".git" -exec rm -rf {} +
-          # Copy dist content to root
-          cp -r dist/* .
-          rm -rf dist
-
-          # Add and commit changes
-          git add .
-          git commit -m "Deploy to production: ${GITHUB_SHA}"
-          
-          # Push changes
-          git push origin deploy --force
+          echo "DO NOTHING"
