@@ -9,7 +9,7 @@ const paymentRequest = stripe.paymentRequest({
   currency: 'usd',
   total: {
     label: 'Sample Product',
-    amount: 10,
+    amount: 50,
   },
   requestPayerName: true,
   requestPayerEmail: true,
