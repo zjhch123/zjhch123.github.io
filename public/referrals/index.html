@@ -11,7 +11,7 @@
                 margin: 0;
                 padding: 0;
             }
-            a {
+            button {
                 position: absolute;
                 top: 0;
                 left: 0;
@@ -20,6 +20,10 @@
                 text-decoration: none;
                 color: #000;
                 color: transparent;
+                border: none;
+                background: transparent;
+                cursor: pointer;
+                -webkit-tap-highlight-color: transparent;
             }
             img {
                 display: block;
@@ -30,7 +34,12 @@
         </style>
     </head>
 <body>
-    <a href="https://zjhch123.github.io/referrals/download/?referral-code=12345678">Start app</a>
+    <button id="open">Start app</button>
     <img src="./page.png" />
+    <script>
+        document.getElementById('open').addEventListener('click', function() {
+            window.location.href = 'https://zjhch123.github.io/referrals/download/index.html';
+        });
+    </script>
 </body>
 </html>
