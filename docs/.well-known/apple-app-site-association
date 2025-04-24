@@ -4,25 +4,29 @@
             {
                 "appID": "UBF8T346G9.com.microsoft.copilot",
                 "paths": [
-                    "/share/*"
+                    "/share/*",
+                    "/referrals/download/*"
                 ]
             },
             {
                 "appID": "SGGM6D27TK.com.microsoft.copilot",
                 "paths": [
-                    "/share/*"
+                    "/share/*",
+                    "/referrals/download/*"
                 ]
             },
             {
                 "appID": "UBF8T346G9.com.microsoft.copilot.development",
                 "paths": [
-                    "/share/*"
+                    "/share/*",
+                    "/referrals/download/*"
                 ]
             },
             {
                 "appID": "SGGM6D27TK.com.microsoft.copilot.development",
                 "paths": [
-                    "/share/*"
+                    "/share/*",
+                    "/referrals/download/*"
                 ]
             }
         ]
