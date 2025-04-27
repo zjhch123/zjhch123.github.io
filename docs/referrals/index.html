@@ -35,10 +35,18 @@
     <button id="start" data-href=""></button>
     <img src="./page.png" />
     <script>
+        function testUserAgent(pattern) {
+            const userAgent =
+                typeof navigator !== "undefined" ? navigator.userAgent : null;
+            return userAgent ? pattern.test(userAgent) : false;
+        }
+        const isAndroid = testUserAgent(/Android/gi);
         const urlParams = new URLSearchParams(window.location.search);
         const referralCode = urlParams.get('referral-code');
         const button = document.getElementById('start');
-        const targetHref = `https://ercz.adj.st/referralLanding?adj_t=1g3xdna2&adj_deep_link=copilotn%3A%2F%2FreferralLanding&adj_campaign=referral&referral-code=${referralCode}`;
+        const iosTargetHref = `https://copilot.microsoft.com/referrals/download/?referral-code=${referralCode}`;
+        const androidTargetHref = `intent://referralLanding?referral-code=${referralCode}#Intent;scheme=copilotn;package=com.microsoft.copilot;S.browser_fallback_url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.microsoft.copilot%26referrer%3Dutm_source%253Dxpay_referral%2526utm_campaign%253D${referralCode};end`;
+        const targetHref = isAndroid ? androidTargetHref : iosTargetHref;
         button.setAttribute('data-href', targetHref);
         button.addEventListener('click', () => {
             window.location.href = targetHref;
