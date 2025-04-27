@@ -11,7 +11,7 @@
                 margin: 0;
                 padding: 0;
             }
-            a {
+            button {
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -20,6 +20,7 @@
                 text-decoration: none;
                 border: none;
                 cursor: pointer;
+                background-color: transparent;
                 -webkit-tap-highlight-color: transparent;
             }
             img {
@@ -31,7 +32,17 @@
         </style>
     </head>
 <body>
-    <a href="https://ercz.adj.st/referralLanding?adj_t=1g3xdna2&adj_deep_link=copilotn%3A%2F%2FreferralLanding&adj_campaign=referral&referral-code=123456">Start app</a>
+    <button id="start" data-href=""></button>
     <img src="./page.png" />
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const referralCode = urlParams.get('referral-code');
+        const button = document.getElementById('start');
+        const targetHref = `https://ercz.adj.st/referralLanding?adj_t=1g3xdna2&adj_deep_link=copilotn%3A%2F%2FreferralLanding&adj_campaign=referral&referral-code=${referralCode}`;
+        button.setAttribute('data-href', targetHref);
+        button.addEventListener('click', () => {
+            window.location.href = targetHref;
+        });
+    </script>
 </body>
 </html>
