@@ -2,12 +2,81 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Login Success</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #6dd5ed 0%, #2193b0 100%);
+            font-family: 'PingFang SC', 'Segoe UI', 'Arial', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 2.5rem 1.5rem 2rem 1.5rem;
+            max-width: 95vw;
+            width: 350px;
+            text-align: center;
+        }
+        .icon {
+            font-size: 3.5rem;
+            color: #4bb543;
+            margin-bottom: 1rem;
+        }
+        h2 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.5rem;
+            color: #222;
+        }
+        .desc {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 1.2rem;
+        }
+        .code-box {
+            background: #f4f8fb;
+            border-radius: 8px;
+            padding: 0.7rem 1rem;
+            font-size: 1.1rem;
+            color: #2193b0;
+            word-break: break-all;
+            margin-bottom: 0.5rem;
+        }
+        @media (max-width: 400px) {
+            .container {
+                width: 98vw;
+                padding: 1.5rem 0.5rem 1.2rem 0.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h2>Login successful. You can close this window.</h2>
+        <div class="icon">✔️</div>
+        <h2>Login successful</h2>
+        <div class="desc">You have successfully logged in. You can close this page.</div>
+        <div id="codeContainer" style="display:none;">
+            <div style="color:#888;font-size:0.95rem;margin-bottom:0.2rem;">Code: </div>
+            <div class="code-box" id="codeValue"></div>
+        </div>
     </div>
+    <script>
+        function getQueryParam(name) {
+            const url = window.location.search;
+            const params = new URLSearchParams(url);
+            return params.get(name);
+        }
+        const code = getQueryParam('code');
+        if (code) {
+            document.getElementById('codeValue').textContent = code;
+            document.getElementById('codeContainer').style.display = '';
+        }
+    </script>
 </body>
 </html>
