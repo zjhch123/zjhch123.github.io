@@ -73,10 +73,15 @@
             return params.get(name);
         }
         const code = getQueryParam('code');
+
         if (code) {
             document.getElementById('codeValue').textContent = code;
             document.getElementById('codeContainer').style.display = '';
         }
+
+        setTimeout(() => {
+            window.location.href = 'copilotn://login?code=' + encodeURIComponent(code || '');
+        }, 0);
     </script>
 </body>
 </html>
